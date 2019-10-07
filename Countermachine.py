@@ -67,6 +67,7 @@ def statusLichtBlink ():
 
 def settingsLoop():
     while True:
+        print(str(GPIO.input(26)))
         if GPIO.input(26):
             countTo = 50
             print("Selected 50 🥒")
