@@ -8,6 +8,8 @@ import time
 #libraries install sudo apt-get install python-smbus i2c-tools
 #https://www.youtube.com/watch?v=B0AQDOTUq2M
 
+#https://raspberrypi.stackexchange.com/questions/28955/unwanted-multiple-presses-when-using-gpio-button-press-detection
+
 #lcd = lcddriver.lcd()
 #PinSetting#
 GPIO.setmode(GPIO.BCM)
