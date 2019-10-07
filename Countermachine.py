@@ -33,14 +33,15 @@ GPIO.setup(18, GPIO.IN)
 #Motor2 Go
 GPIO.setup(25, GPIO.IN)
 
-count=0
-countTo=0
+#count=0
+#countTo=0
 
 #lcd.lcd_clear()
 #lcd.lcd_backlight("on")
 #lcd.lcd_display_string("Gurkenzaehlmaschine",1)
 
-status = "EINSTELLEN"
+status = "COUNT"
+#countTo=10
 
 def stopRuettelband():
     print("🛑 ruettelband gestopt")
@@ -70,29 +71,26 @@ def settingsLoop():
         print(str(GPIO.input(26)))
         if GPIO.input(26):
             countTo = 50
-            print("Selected 50 🥒")
             break
 
         elif GPIO.input(14):
             countTo = 100
-            print("Selected 100 🥒🥒")
             break
 
         elif GPIO.input(15):
             countTo = 150
-            print("Selected 150 🥒🥒🥒")
             break
 
         elif GPIO.input(18):
             countTo= 200
-            print("Selected 200 🥒🥒🥒🥒")
             break
+    print("breaked " + str(countTo))
     status = "COUNT"
 
 
-def countLoop():
-    print("⏳ counting, current value " + str(count))
+def countLoop(count, countTo):
     while count <= countTo:
+        print("⏳ counting, current value " + str(count))
         if GPIO.input(5):
             count = count+1
         if GPIO.input(6):
@@ -109,12 +107,11 @@ def countLoop():
     status = "FERTIG"
 
 while True:
+    countTo = 10
+    count = 0
 
-    if status == "EINSTELLEN":
-        settingsLoop()
+   # settingsLoop()
 
-    elif status == "COUNT":
-        countLoop()
+    countLoop(count, countTo)
 
-    elif status == "FERTIG":
-        statusLichtBlink()
+    statusLichtBlink()
