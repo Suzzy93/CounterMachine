@@ -35,6 +35,11 @@ GPIO.setup(18, GPIO.IN)
 #Motor2 Go
 GPIO.setup(25, GPIO.IN)
 
+#--- Auf 0->1counten ---#
+bool L1 = True
+bool L2 = True
+bool L3 = True
+bool L4 = True
 #count=0
 #countTo=0
 
@@ -44,6 +49,7 @@ GPIO.setup(25, GPIO.IN)
 
 status = "COUNT"
 #countTo=10
+
 
 def stopRuettelband():
     print("🛑 ruettelband gestopt")
@@ -93,14 +99,38 @@ def settingsLoop():
 def countLoop(count, countTo):
     while count <= countTo:
         print("⏳ counting, current value " + str(count))
-        if GPIO.input(5):
-            count = count+1
-        if GPIO.input(6):
-            count = count+1
-        if GPIO.input(13):
-            count = count+1
-        if GPIO.input(19):
-            count = count+1
+        if L1:
+            if GPIO.input(5):
+                count = count+1
+                L1 = False
+        if GPIO.input(5) == 0:
+            L1 = True
+        if L2:
+            if GPIO.input(6):
+                count = count+1
+                L2 = False
+        if GPIO.input(6) == 0:
+            L2 = True
+        if L3:
+            if GPIO.input(13):
+                count = count+1
+                L3 = False
+        if GPIO.input(13) == 0:
+            L3 = True
+        if L4:
+            if GPIO.input(19):
+                count = count+1
+                L4 = False
+        if GPIO.input(19) == 0:
+            L4 = True    
+        
+        #if GPIO.input(6):
+         #   count = count+1
+        #if GPIO.input(13):
+         #   count = count+1
+        #if GPIO.input(19):
+         #   count = count+1
+         
         # lcd.lcd_display_string(str(count) + "von" + str(countTo))
 
         ruettelband()
