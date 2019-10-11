@@ -3,6 +3,7 @@
 import RPi.GPIO as GPIO
 #import lcddriver
 import time
+import threading
 
 #Display
 #libraries install sudo apt-get install python-smbus i2c-tools
@@ -54,12 +55,14 @@ def stopRuettelband():
     GPIO.output(24, GPIO.LOW)
 
 def ruettelband():
-    print("➡️ ruettelband läuft")
+    #print("➡️ ruettelband läuft")
     GPIO.output(23, GPIO.HIGH)
     GPIO.output(24, GPIO.HIGH)
-    time.sleep(0.5)
-    GPIO.output(24, GPIO.LOW)
-    time.sleep(0.5)
+    #t= threading.Timer(1.0,ruettelband)
+    # t.start()
+    #time.sleep(0.5)
+    #GPIO.output(24, GPIO.LOW)
+    #time.sleep(0.5)
 
 def statusLichtBlink ():
     print("🚨 status blinkt")
@@ -99,11 +102,11 @@ def countLoop(count,countTo):
     L3 = True
     L4 = True
     while count <= countTo:
-        print("⏳ counting, current value " + str(count))
+        #print("⏳ counting, current value " + str(count)+ "von" + str(countTo))
         if L1:
             if GPIO.input(5):
                 count = count+1
-                print ("L1")
+                print (str(count)+"von"+ str(countTo))
                 L1 = False
         if GPIO.input(5) == 0:
             L1 = True
@@ -125,6 +128,8 @@ def countLoop(count,countTo):
                 L4 = False
         if GPIO.input(19) == 0:
             L4 = True
+
+
 
         #if GPIO.input(6):
          #   count = count+1
