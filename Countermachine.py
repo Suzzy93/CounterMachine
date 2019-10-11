@@ -36,10 +36,7 @@ GPIO.setup(18, GPIO.IN)
 GPIO.setup(25, GPIO.IN)
 
 #--- Auf 0->1counten ---#
-bool L1 = True
-bool L2 = True
-bool L3 = True
-bool L4 = True
+
 #count=0
 #countTo=0
 
@@ -47,7 +44,7 @@ bool L4 = True
 #lcd.lcd_backlight("on")
 #lcd.lcd_display_string("Gurkenzaehlmaschine",1)
 
-status = "COUNT"
+status = "EINSTELLEN"
 #countTo=10
 
 
@@ -76,9 +73,9 @@ def statusLichtBlink ():
 
 def settingsLoop():
     while True:
-        print(str(GPIO.input(26)))
+
         if GPIO.input(26):
-            countTo = 50
+            countTo = 10
             break
 
         elif GPIO.input(14):
@@ -96,12 +93,17 @@ def settingsLoop():
     status = "COUNT"
 
 
-def countLoop(count, countTo):
+def countLoop(count,countTo):
+    L1 = True
+    L2 = True
+    L3 = True
+    L4 = True
     while count <= countTo:
         print("⏳ counting, current value " + str(count))
         if L1:
             if GPIO.input(5):
                 count = count+1
+                print ("L1")
                 L1 = False
         if GPIO.input(5) == 0:
             L1 = True
@@ -122,15 +124,15 @@ def countLoop(count, countTo):
                 count = count+1
                 L4 = False
         if GPIO.input(19) == 0:
-            L4 = True    
-        
+            L4 = True
+
         #if GPIO.input(6):
          #   count = count+1
         #if GPIO.input(13):
          #   count = count+1
         #if GPIO.input(19):
          #   count = count+1
-         
+
         # lcd.lcd_display_string(str(count) + "von" + str(countTo))
 
         ruettelband()
@@ -142,8 +144,8 @@ while True:
     countTo = 10
     count = 0
 
-   # settingsLoop()
+    settingsLoop()
 
-    countLoop(count, countTo)
+    countLoop(count,countTo)
 
     statusLichtBlink()
