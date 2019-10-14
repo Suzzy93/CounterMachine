@@ -113,6 +113,7 @@ def countLoop(count,countTo):
         if L2:
             if GPIO.input(6):
                 count = count+1
+                print (str(count)+"von"+ str(countTo))
                 L2 = False
         if GPIO.input(6) == 0:
             L2 = True
