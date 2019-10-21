@@ -24,16 +24,20 @@ GPIO.setup(19, GPIO.IN)
 # der Benutzer den Button anklickt
 def button_action50():
     countTo = 50
-    countLoop()
+    count = 0
+    countLoop(count,countTo)
 def button_action100():
     countTo = 100
-    countLoop()
+    count = 0
+    countLoop(count,countTo)
 def button_action150():
     countTo = 150
-    countLoop()
+    count = 0
+    countLoop(count,countTo)
 def button_action200():
     countTo = 200
-    countLoop()
+    count = 0
+    countLoop(count,countTo)
 
 def stopRuettelband():
     print("🛑 ruettelband gestopt")
@@ -45,6 +49,8 @@ def ruettelband():
     GPIO.output(23, GPIO.HIGH)
     GPIO.output(24, GPIO.HIGH)
 
+def textUpdate(count, countTo):
+    info_label.config(text=str (count) + "bis" + str(countTo) )
 
 def statusLichtBlink ():
     print("🚨 status blinkt")
@@ -54,18 +60,21 @@ def statusLichtBlink ():
         GPIO.output(8, GPIO.LOW)
         time.sleep(0.5)
 
-def countLoop():
+def countLoop(count, countTo):
     L1 = True
     L2 = True
     L3 = True
     L4 = True
-    #count = 0
+    GPIO.output(23, GPIO.HIGH)
+    GPIO.output(24, GPIO.HIGH)
+
+
     while count <= countTo:
         #print("⏳ counting, current value " + str(count)+ "von" + str(countTo))
-        info_label.config(text=str(count) )
         if L1:
             if GPIO.input(5):
                 count = count+1
+
                 L1 = False
         if GPIO.input(5) == 0:
             L1 = True
@@ -87,7 +96,10 @@ def countLoop():
                 L4 = False
         if GPIO.input(19) == 0:
             L4 = True
-
+        #textUpdate(count, countTo)
+        info_label.config(text=str (count) + " von " + str(countTo) )
+    stopRuettelband()
+    info_label.config(text= str(countTo) + " Gurken wurden gezählt" )
 # Ein Fenster erstellen
 fenster = Tk()
 # Den Fenstertitle erstellen

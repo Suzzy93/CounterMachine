@@ -8,5 +8,8 @@ while True:
     if GPIO.input(5):
         print ("detected!!!")
 
+
+
+
     else :
         print ("Nichts")
